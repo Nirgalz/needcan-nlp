@@ -1,7 +1,7 @@
-var nlp = nlp_compromise;
+let nlp = nlp_compromise;
 
-var resultCellName = $('#result-names');
-var resultCellNoun = $('#result-nouns');
+const resultCellName = $('#result-names');
+const resultCellNoun = $('#result-nouns');
 
 
 //interface semantic-ui stuff :
@@ -12,7 +12,7 @@ $('#side-menu').on('click', function () {
 });
 
 //need can button
-var needcanBTN = $('.needcan-btn');
+const needcanBTN = $('.needcan-btn');
 
 needcanBTN.on('click', function () {
     needcanBTN.removeClass('active needcan-active');
@@ -20,7 +20,7 @@ needcanBTN.on('click', function () {
 });
 
 function checkNeedCanButton() {
-    var result = $('.needcan-active').attr('id').split('-');
+    let result = $('.needcan-active').attr('id').split('-');
     return result[1];
 }
 
@@ -36,42 +36,60 @@ function Knobject(username, needcan, tags) {
 
 //NLP stuff
 function processNames() {
-    var data = $('#inputData');
+    let data = $('#inputData');
     resultCellName.empty();
-    var result = nlp.text(data.val()).people();
+    let result = nlp.text(data.val()).people();
     result.forEach(function (item, index, arr) {
         resultCellName.append(arr[index].firstName + ' - ');
     });
 }
 
 function processNouns() {
-    var tags = [];
-    var data = nlp.text($('#inputData').val());
+    let tags = [];
+    let data = nlp.text($('#inputData').val());
     resultCellNoun.empty();
-    var sentences = data.sentences;
+    let sentences = data.sentences;
     for (var i = 0; i < sentences.length; i++) {
-        var terms = sentences[i].terms;
+        let terms = sentences[i].terms;
         for (var j = 0; j < terms.length; j++) {
             if (terms[j].tag == 'Noun') {
-                resultCellNoun.append(terms[j].text + ' - ');
                 tags.splice(j, 0, terms[j].text);
             }
-
-            console.log('i ' + checkNeedCanButton() + ' ' + terms[j].text + " -> " + terms[j].tag);
         }
     }
+    return tags;
 }
 
 
 function processData() {
-    var username = $('#username').val();
+    let username = $('#username').val();
 
     processNames();
-    processNouns();
 
-
-    var knob = new Knobject(username, checkNeedCanButton(), tags);
+    let knob = new Knobject(username, checkNeedCanButton(), processNouns());
+    $('#result-print').html(printResults(knob.username, knob.needcan, knob.tags));
     console.log(knob);
 
+}
+
+
+//print results
+function printResults(username, needType, tags) {
+    return `<table class="ui celled table">
+<tbody>
+<tr>
+<td>Username</td>
+<td>${ username }</td>
+</tr>
+<tr>
+<td>NEED/CAN</td>
+<td>${ needType }</td>
+</tr>
+<tr>
+<td>Tags</td>
+<td>${ tags }</td>
+</tr>
+</tbody>
+</table>`;
 }
 

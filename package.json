@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Nirgalz/ugly-needcan-npl-test.git"
+    "url": "git+https://github.com/Nirgalz/needcan-nlp.git"
   },
   "keywords": [
     "npl"
@@ -16,9 +16,9 @@
   "author": "Nirgalz",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Nirgalz/ugly-needcan-npl-test/issues"
+    "url": "https://github.com/Nirgalz/needcan-nlp/issues"
   },
-  "homepage": "https://github.com/Nirgalz/ugly-needcan-npl-test#readme",
+  "homepage": "https://github.com/Nirgalz/needcan-nlp#readme",
   "dependencies": {
     "nlp_compromise": "^6.5.3",
     "semantic-ui": "^2.2.6"

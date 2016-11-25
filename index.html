@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+<script src="node_modules/nlp_compromise/builds/nlp_compromise.min.js"></script>
+   <script src="bower_components/jquery/dist/jquery.min.js"></script>
+</head>
+<body>
+<p>username</p>
+<input type="text" id="username">
+
+<h1>I </h1>
+<select name="needcan-options">
+    <option value="need">NEED</option>
+    <option value="can">CAN</option>
+</select>
+<br>
+    <textarea rows="4" cols="50" id="inputData"></textarea>
+<br>
+<button type="button" onclick="processData()">submit</button>
+
+
+<h3>Names : </h3>
+<div id="result-names"></div>
+<h3>Nouns</h3>
+<div id="result-nouns"></div>
+
+<script>
+
+    var nlp = nlp_compromise;
+
+    var resultCellName = $('#result-names');
+    var resultCellNoun = $('#result-nouns');
+
+    function Knobject(username, needcan, tags) {
+        this.username = username;
+        this.needcan = needcan;
+        this.tags = tags;
+    }
+
+
+    function processNames() {
+        var data = $('#inputData');
+        resultCellName.empty();
+        var result = nlp.text(data.val()).people();
+        result.forEach(function (item, index, arr) {
+            resultCellName.append(arr[index].firstName + ' - ');
+        });
+    }
+
+    function processData() {
+        var needcanType = $('select[name=needcan-options]').val();
+        var username = $('#username').val();
+        var tags = [];
+
+        processNames();
+        var data = nlp.text($('#inputData').val());
+        resultCellNoun.empty();
+        var sentences = data.sentences;
+        for(var i = 0; i < sentences.length; i++) {
+            var terms = sentences[i].terms;
+            for(var j=0; j < terms.length; j++) {
+                if (terms[j].tag == 'Noun' ) {
+                    resultCellNoun.append(terms[j].text + ' - ');
+                    tags.splice(j, 0, terms[j].text);
+                }
+
+                console.log('i ' + needcanType + ' ' + terms[j].text + " -> " + terms[j].tag);
+            }
+        }
+        var knob = new Knobject(username, needcanType, tags);
+        console.log(knob);
+
+    }
+
+
+
+
+</script>
+
+</body>
+</html>

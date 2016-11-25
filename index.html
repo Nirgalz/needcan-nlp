@@ -27,31 +27,31 @@
         Friends
     </a>
 </div>
-<div id="side-menu" class="ui black big launch right attached fixed button">
-    <i class="content icon"></i>
-    <span class="text">Menu</span>
-</div>
-<div class="pusher">
 
+<div class="pusher">
+    <div id="side-menu" class="ui black big launch right attached fixed button">
+        <i class="content icon"></i>
+        <span class="text">Menu</span>
+    </div>
 
     <div class="ui stackable grid container">
         <div class="four wide column">
             <div class="ui input large icon" type="text">
-                <input  id="username" type="text" placeholder="Username">
+                <input id="username" type="text" placeholder="Username">
                 <i class="user icon"></i>
             </div>
 
         </div>
         <div class="four wide column">
             <div class="ui large buttons">
-                <button id="btn-need" class="ui button active needcan-btn">NEED</button>
+                <button id="btn-need" class="ui button active needcan-btn needcan-active">NEED</button>
                 <div id="btn-can" class="or"></div>
                 <button class="ui button needcan-btn">CAN</button>
             </div>
         </div>
         <div class="eight wide column">
             <div class="ui input fluid large icon" type="text">
-                <input  id="inputData" type="text" placeholder="Describe your NEED/CAN">
+                <input id="inputData" type="text" placeholder="Describe your NEED/CAN">
                 <i class="edit icon"></i>
             </div>
         </div>
@@ -59,18 +59,25 @@
     <br>
     <button class="fluid ui button" onclick="processData()">Submit</button>
 
-        <div class="ui divider"></div>
+    <div class="ui divider"></div>
 
-        <div class="ui stackable grid container">
-            Results :
-            <br>
+    <div class="ui stackable grid container">
+        <div class=" eight wide column">
+            <h3 class="ui  attached inverted header">
+                Suggested tags :
+            </h3>
+            <div class="ui attached segment">
+                <h3>Names : </h3>
+                <div id="result-names"></div>
+                <div class="ui divider"></div>
 
-            <h3>Names : </h3>
-            <div id="result-names"></div>
-            <h3>Nouns</h3>
-            <div id="result-nouns"></div>
-</div>
+                <h3>Nouns :</h3>
+                <div id="result-nouns"></div>
+            </div>
+        </div>
 
+
+    </div>
 
 
 </div>

@@ -15,12 +15,12 @@ $('#side-menu').on('click', function () {
 var needcanBTN = $('.needcan-btn');
 
 needcanBTN.on('click', function () {
-    needcanBTN.removeClass('active');
-    $(this).addClass('active');
+    needcanBTN.removeClass('active needcan-active');
+    $(this).addClass('active needcan-active');
 });
 
 function checkNeedCanButton() {
-    var result = $('.needcan-btn.active').attr('id').split('-');
+    var result = $('.needcan-active').attr('id').split('-');
     return result[1];
 }
 
@@ -57,18 +57,18 @@ function processNouns() {
                 tags.splice(j, 0, terms[j].text);
             }
 
-            console.log('i ' + needcanType + ' ' + terms[j].text + " -> " + terms[j].tag);
+            console.log('i ' + checkNeedCanButton() + ' ' + terms[j].text + " -> " + terms[j].tag);
         }
     }
 }
 
 
 function processData() {
-    var needcanType = $('select[name=needcan-options]').val();
     var username = $('#username').val();
 
     processNames();
     processNouns();
+
 
     var knob = new Knobject(username, checkNeedCanButton(), tags);
     console.log(knob);

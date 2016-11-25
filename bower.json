@@ -1,0 +1,24 @@
+{
+  "name": "needcan-npl",
+  "description": "npl need can tests",
+  "main": "index.html",
+  "authors": [
+    "Nirgalz <znirgal@gmail.com>"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "npl"
+  ],
+  "homepage": "https://github.com/Nirgalz/ugly-needcan-npl-test",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^3.1.1"
+  }
+}

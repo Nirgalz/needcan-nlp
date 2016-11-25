@@ -1,4 +1,25 @@
 {
-  "name": "application-name",
-  "version": "0.0.1"
+  "name": "needcan-npl",
+  "version": "0.0.1",
+  "description": "needcan tests with npl",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nirgalz/ugly-needcan-npl-test.git"
+  },
+  "keywords": [
+    "npl"
+  ],
+  "author": "Nirgalz",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Nirgalz/ugly-needcan-npl-test/issues"
+  },
+  "homepage": "https://github.com/Nirgalz/ugly-needcan-npl-test#readme",
+  "dependencies": {
+    "nlp_compromise": "^6.5.3"
+  }
 }

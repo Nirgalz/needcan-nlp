@@ -5,83 +5,77 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>NeedCan-NLP</title>
 
-<script src="node_modules/nlp_compromise/builds/nlp_compromise.min.js"></script>
-   <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="node_modules/nlp_compromise/builds/nlp_compromise.min.js"></script>
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="semantic/dist/semantic.min.css">
+    <script src="semantic/dist/semantic.min.js"></script>
 </head>
 <body>
-<p>username</p>
-<input type="text" id="username">
-
-<h1>I </h1>
-<select name="needcan-options">
-    <option value="need">NEED</option>
-    <option value="can">CAN</option>
-</select>
-<br>
-    <textarea rows="4" cols="50" id="inputData"></textarea>
-<br>
-<button type="button" onclick="processData()">submit</button>
-
-
-<h3>Names : </h3>
-<div id="result-names"></div>
-<h3>Nouns</h3>
-<div id="result-nouns"></div>
-
-<script>
-
-    var nlp = nlp_compromise;
-
-    var resultCellName = $('#result-names');
-    var resultCellNoun = $('#result-nouns');
-
-    function Knobject(username, needcan, tags) {
-        this.username = username;
-        this.needcan = needcan;
-        this.tags = tags;
-    }
+<div class="ui left demo vertical inverted sidebar labeled icon menu">
+    <a class="item">
+        <i class="home icon"></i>
+        Home
+    </a>
+    <a class="item">
+        <i class="block layout icon"></i>
+        Topics
+    </a>
+    <a class="item">
+        <i class="smile icon"></i>
+        Friends
+    </a>
+</div>
+<div id="side-menu" class="ui black big launch right attached fixed button">
+    <i class="content icon"></i>
+    <span class="text">Menu</span>
+</div>
+<div class="pusher">
 
 
-    function processNames() {
-        var data = $('#inputData');
-        resultCellName.empty();
-        var result = nlp.text(data.val()).people();
-        result.forEach(function (item, index, arr) {
-            resultCellName.append(arr[index].firstName + ' - ');
-        });
-    }
+    <div class="ui stackable grid container">
+        <div class="four wide column">
+            <div class="ui input large icon" type="text">
+                <input  id="username" type="text" placeholder="Username">
+                <i class="user icon"></i>
+            </div>
 
-    function processData() {
-        var needcanType = $('select[name=needcan-options]').val();
-        var username = $('#username').val();
-        var tags = [];
+        </div>
+        <div class="four wide column">
+            <div class="ui large buttons">
+                <button id="btn-need" class="ui button active needcan-btn">NEED</button>
+                <div id="btn-can" class="or"></div>
+                <button class="ui button needcan-btn">CAN</button>
+            </div>
+        </div>
+        <div class="eight wide column">
+            <div class="ui input fluid large icon" type="text">
+                <input  id="inputData" type="text" placeholder="Describe your NEED/CAN">
+                <i class="edit icon"></i>
+            </div>
+        </div>
+    </div>
+    <br>
+    <button class="fluid ui button" onclick="processData()">Submit</button>
 
-        processNames();
-        var data = nlp.text($('#inputData').val());
-        resultCellNoun.empty();
-        var sentences = data.sentences;
-        for(var i = 0; i < sentences.length; i++) {
-            var terms = sentences[i].terms;
-            for(var j=0; j < terms.length; j++) {
-                if (terms[j].tag == 'Noun' ) {
-                    resultCellNoun.append(terms[j].text + ' - ');
-                    tags.splice(j, 0, terms[j].text);
-                }
+        <div class="ui divider"></div>
 
-                console.log('i ' + needcanType + ' ' + terms[j].text + " -> " + terms[j].tag);
-            }
-        }
-        var knob = new Knobject(username, needcanType, tags);
-        console.log(knob);
+        <div class="ui stackable grid container">
+            Results :
+            <br>
 
-    }
+            <h3>Names : </h3>
+            <div id="result-names"></div>
+            <h3>Nouns</h3>
+            <div id="result-nouns"></div>
+</div>
 
 
 
+</div>
 
-</script>
 
+<script src="script.js"></script>
 </body>
 </html>

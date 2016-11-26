@@ -1,0 +1,26 @@
+{
+  "nodes": {
+    "4P57iDrcDDnmZKj5OopdZnGG": {
+      "_": {
+        "#": "4P57iDrcDDnmZKj5OopdZnGG",
+        ">": {
+          "message": 1480180303494
+        }
+      },
+      "message": "updated value"
+    },
+    "data": {
+      "_": {
+        "#": "data",
+        "key": 1,
+        ">": {
+          "4P57iDrcDDnmZKj5OopdZnGG": 1478858364690
+        }
+      },
+      "4P57iDrcDDnmZKj5OopdZnGG": {
+        "#": "4P57iDrcDDnmZKj5OopdZnGG"
+      }
+    }
+  },
+  "keys": {}
+}

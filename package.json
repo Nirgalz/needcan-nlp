@@ -1,10 +1,11 @@
 {
   "name": "needcan-npl",
   "version": "0.0.1",
-  "description": "needcan tests with npl",
-  "main": "index.html",
+  "description": "needcan tests with npl and gun-db",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
@@ -20,6 +21,8 @@
   },
   "homepage": "https://github.com/Nirgalz/needcan-nlp#readme",
   "dependencies": {
+    "gun": "^0.3.9991",
+    "gun-server": "^1.0.0",
     "nlp_compromise": "^6.5.3",
     "semantic-ui": "^2.2.6"
   }

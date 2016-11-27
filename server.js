@@ -2,27 +2,31 @@
 
 var Gun = require('gun');
 var http = require('http');
-var port = process.env.PORT || 8080;
 var fs = require('fs');
+var express = require('express');
+
+
+var path = require('path');
+var app = express();
+
+// Define the port to run on
+app.set('port', 3000);
+
+app.use(express.static(path.join(__dirname, 'public')));
+
 
 // Saves all data to `data.json`.
 var gun = Gun({
     file: 'data.json',
 });
 
-// Listens on /gun.js route.
-var server = http.Server(gun.wsp.server);
+gun.wsp(app);
 
-// Serves up /index.html
-server.on('request', function (req, res) {
-    if (req.url === '/' || req.url === '/index.html') {
-        fs.createReadStream('index.html').pipe(res);
-    }
+
+// Listen for requests
+var server = app.listen(app.get('port'), function() {
+    var port = server.address().port;
 });
 
-// Handles real-time requests and updates.
-gun.wsp(server);
 
-server.listen(port, function () {
-    console.log('\nApp listening on port', port);
-});
+

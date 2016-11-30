@@ -20,13 +20,13 @@ var gun = Gun({
     file: 'data.json',
 });
 
-gun.wsp(app);
 
 
 // Listen for requests
 var server = app.listen(app.get('port'), function() {
     var port = server.address().port;
-});
+}).listen(gun.wsp.server);
 
 
+gun.wsp(server);
 

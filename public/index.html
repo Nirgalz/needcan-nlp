@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>NeedCan-NLP</title>
 
-    <script src="https://unpkg.com/nlp_compromise@latest/builds/nlp_compromise.min.js"></script>
+    <script src="node_modules/nlp_compromise/builds/nlp_compromise.min.js"></script>
     <script src="bower_components/jquery/dist/jquery.min.js"></script>
     <link rel="stylesheet" type="text/css" href="semantic/dist/semantic.min.css">
     <script src="semantic/dist/semantic.min.js"></script>
@@ -82,13 +82,13 @@
 
 </div>
 
-<script src='http://localhost:3000/gun.js'></script>
+<script src='node_modules/gun/gun.js'></script>
 
 <script>
     (function () {
         // Sync this gun instance with the server.
         var gun = Gun([
-            'http://localhost:8080/gun',
+            'http://localhost:3000/node_modules/gun',
         ]);
         // Reads key 'data'.
         var data = gun.get('data');

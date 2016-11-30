@@ -84,25 +84,7 @@
 
 <script src='node_modules/gun/gun.js'></script>
 
-<script>
-    (function () {
-        // Sync this gun instance with the server.
-        var gun = Gun([
-            'http://localhost:3000/node_modules/gun',
-        ]);
-        // Reads key 'data'.
-        var data = gun.get('data');
-        // Exposed so the JS console can see it.
-        window.data = data;
-        console.log('Gun reference exposed as %cwindow.data', 'color: red');
-        // Writes a value to the key 'data'.
-        data.put({ message: 'Hello world!' });
-        // Listen for real-time change events.
-        data.path('message').on(function (message) {
-            console.log('Message:', message);
-        });
-    }())
-</script>
+
 
 <script src="js/script.js"></script>
 </body>

@@ -1,4 +1,30 @@
-let nlp = nlp_compromise;
+let nlp = nlp_compromise
+
+//gunDB stuff
+// Sync this gun instance with the server.
+let gun = Gun([
+    'http://localhost:3000/node_modules/gun',
+]);
+// Reads key 'data'.
+let knoUsers = gun.get('knoUsers');
+let knoTags = gun.get('knoTags');
+let knobjects = gun.get('knobjects');
+
+
+function addKnobject(item, tags, knobjects) {
+    knobjects.put(item)
+    for (var num = 0; num < tags.length; num++) {
+        knobjects.path('tags').set(tags[num]);
+    }
+
+    knobjects.path('username').on(function (username) {
+        console.log('username:', username)
+    })
+    knobjects.path('tags').on(function (tags) {
+        console.log('tags:', tags)
+    })
+
+}
 
 const resultCellName = $('#result-names');
 const resultCellNoun = $('#result-nouns');
@@ -30,7 +56,7 @@ function checkNeedCanButton() {
 function Knobject(username, needcan, tags) {
     this.username = username;
     this.needcan = needcan;
-    this.tags = tags;
+    this.tags = {};
 }
 
 
@@ -66,9 +92,10 @@ function processData() {
 
     processNames();
 
-    let knob = new Knobject(username, checkNeedCanButton(), processNouns());
-    $('#result-print').html(printResults(knob.username, knob.needcan, knob.tags));
-    console.log(knob);
+    let knob = new Knobject(username, checkNeedCanButton());
+    let tags = processNouns();
+    $('#result-print').html(printResults(knob.username, knob.needcan, tags))
+    addKnobject(knob, tags, knobjects);
 
 }
 

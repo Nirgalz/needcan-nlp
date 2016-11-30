@@ -15,7 +15,8 @@ function addKnobject(item, tags) {
 
     //object constructor
     let nobject = {
-        needcan: item.needcan
+        needcan: item.needcan,
+        fullText: $('#inputData').val()
     };
 
     //user constructor
@@ -29,7 +30,7 @@ function addKnobject(item, tags) {
     noUser.nobjects = nobject;
 
     //puts in gundb and indexes objects
-    gun.put(nob).key('nobject/' + item.owner + item.needcan);
+    gun.put(nobject).key('nobject/' + item.owner + item.needcan);
     gun.put(noUser).key('noUsers/' + item.owner);
 
 

@@ -6,25 +6,53 @@ let gun = Gun([
     'http://localhost:3000/node_modules/gun',
 ]);
 // Reads key 'data'.
-let knoUsers = gun.get('knoUsers');
-let knoTags = gun.get('knoTags');
-let knobjects = gun.get('knobjects');
+
+let nobjects = gun.get('nobjects');
 
 
-function addKnobject(item, tags, knobjects) {
-    knobjects.put(item)
-    for (var num = 0; num < tags.length; num++) {
-        knobjects.path('tags').set(tags[num]);
-    }
 
-    knobjects.path('username').on(function (username) {
+function addKnobject(item, tags) {
+
+    nobjects.set(item).key('nobjects/' + item.owner + item.needcan);
+
+
+    //creates key for user
+    let user = gun.get('noUsers/' + item.owner);
+    user.key('noUsers/' + item.owner);
+
+    user.path('username').put(item.owner);
+    user.path('userNobjects').put({});
+
+    user.path('userNobjects').key('nobjects/' + item.owner + item.needcan);
+
+
+
+    //for loop for tags
+  /*  for (var i = 0; i < tags.length; i++) {
+
+        //creates tags keys for each tag
+        gun.put(tags[i]).key('noTags/' + tags[i]);
+        let tag = gun.get('noTags/' + tags[i]);
+        tag.path('name').set(tags[i]);
+
+        //add tags to the nobject
+
+        nobjects.path('tags').set(tags[i]);
+    }*/
+
+
+    /*  user.path('nobjects').set( object key or something)*/
+
+
+    nobjects.path('username').on(function (username) {
         console.log('username:', username)
-    })
-    knobjects.path('tags').on(function (tags) {
+    });
+    nobjects.path('tags').on(function (tags) {
         console.log('tags:', tags)
     })
-
 }
+
+
 
 const resultCellName = $('#result-names');
 const resultCellNoun = $('#result-nouns');
@@ -54,7 +82,7 @@ function checkNeedCanButton() {
 //knobject constructor
 //placeholder
 function Knobject(username, needcan, tags) {
-    this.username = username;
+    this.owner = username;
     this.needcan = needcan;
     this.tags = {};
 }
@@ -95,7 +123,7 @@ function processData() {
     let knob = new Knobject(username, checkNeedCanButton());
     let tags = processNouns();
     $('#result-print').html(printResults(knob.username, knob.needcan, tags))
-    addKnobject(knob, tags, knobjects);
+    addKnobject(knob, tags);
 
 }
 

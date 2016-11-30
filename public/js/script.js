@@ -13,18 +13,24 @@ let nobjects = gun.get('nobjects');
 
 function addKnobject(item, tags) {
 
-    nobjects.set(item).key('nobjects/' + item.owner + item.needcan);
+    //object constructor
+    let nobject = {
+        needcan: item.needcan
+    };
 
+    //user constructor
+    let noUser = {
+        username: item.owner,
+        nobjects: {}
+    };
 
-    //creates key for user
-    let user = gun.get('noUsers/' + item.owner);
-    user.key('noUsers/' + item.owner);
+    //associations
+    nobject.owner = noUser;
+    noUser.nobjects = nobject;
 
-    user.path('username').put(item.owner);
-    user.path('userNobjects').put({});
-
-    user.path('userNobjects').key('nobjects/' + item.owner + item.needcan);
-
+    //puts in gundb and indexes objects
+    gun.put(nob).key('nobject/' + item.owner + item.needcan);
+    gun.put(noUser).key('noUsers/' + item.owner);
 
 
     //for loop for tags
@@ -44,12 +50,10 @@ function addKnobject(item, tags) {
     /*  user.path('nobjects').set( object key or something)*/
 
 
-    nobjects.path('username').on(function (username) {
-        console.log('username:', username)
-    });
-    nobjects.path('tags').on(function (tags) {
+
+   /* nobjects.path('tags').on(function (tags) {
         console.log('tags:', tags)
-    })
+    })*/
 }
 
 

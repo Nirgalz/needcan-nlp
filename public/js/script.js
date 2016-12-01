@@ -27,7 +27,10 @@ function addKnobject(item, tags) {
 
     //associations
     nobject.owner = noUser;
+/*
     noUser.nobjects = nobject;
+*/
+    $.extend(noUser.nobjects, nobject);
 
     //puts in gundb and indexes objects
     gun.put(nobject).key('nobject/' + item.owner + item.needcan);

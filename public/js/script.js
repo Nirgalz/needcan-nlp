@@ -63,12 +63,9 @@ function getGraphViz(nobjectID) {
             let keys = Object.keys(taggedNobjects[k]);
             let noTag = taggedNobjects[k]['_']['#'].split('/');
             for (let l=1; l<keys.length; l++) {
-                for ( let m = 0; m<nodesArray.length; m++) {
-                    if (nodesArray[m]['id'] != keys[l]) {
-                        nodesArray.push({id: keys[l], label: keys[l], color: 'green'});
+                let id = keys[l];
+                nodesArray.push({id: id, label: id, color: 'green'});
 
-                    }
-                }
 
                 edgesArray.push({from: noTag[1], to: keys[l]});
             }

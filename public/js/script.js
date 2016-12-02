@@ -7,9 +7,24 @@ let gun = Gun([
 ]);
 // Reads key 'data'.
 
+/*
 let nobjects = gun.get('nobjects');
+*/
 
 //vis.js stuff
+
+function getsSharedTagsNobjects(tagz) {
+    for (let i=1; i<tagz.length; i++) {
+        let nobjects;
+        gun.tagged().path(tagz[i]).val(function(tagmember,tags){
+            console.log(tagmember,tags)
+        })
+    }
+/*
+    return nobjects;
+*/
+}
+
 
 function getGraphViz(nobjectID) {
    let nobNC;
@@ -26,6 +41,8 @@ function getGraphViz(nobjectID) {
         {id: nobjectID, label: nobNC, color: 'orange'},
 
     ];
+
+    getsSharedTagsNobjects(nobTags);
 
     let edgesArray = [];
 

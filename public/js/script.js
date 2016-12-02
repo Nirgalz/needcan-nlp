@@ -9,9 +9,62 @@ let gun = Gun([
 
 let nobjects = gun.get('nobjects');
 
+//vis.js stuff
+
+function getGraphViz(nobjectID) {
+   let nobNC;
+    let nobTags;
+    gun.get('nobject/'+nobjectID).path('needcan').val(function (needcan) {
+        nobNC = needcan;
+    });
+    gun.get('nobject/'+nobjectID).path('tags').val(function (tags) {
+        nobTags = tags;
+    });
+    nobTags = Object.keys(nobTags);
+
+    let nodesArray = [
+        {id: nobjectID, label: nobNC, color: 'orange'},
+
+    ];
+
+    let edgesArray = [];
+
+    function getsTags(nobTags, nobjectID) {
+        for (let i=1; i<nobTags.length; i++) {
+            nodesArray.push({id: nobTags[i], label: nobTags[i], color: 'yellow'});
+        }
+        for (let i=1; i<nobTags.length; i++) {
+            edgesArray.push({from: nobjectID, to: nobTags[i]});
+        }
 
 
-function addKnobject(item, tags) {
+    }
+    getsTags(nobTags, nobjectID);
+
+
+    // create an array with nodes
+    var nodes = new vis.DataSet(nodesArray);
+
+
+
+    // create an array with edges
+    var edges = new vis.DataSet(edgesArray);
+
+    // create a network
+    var container = document.getElementById('mynetwork');
+    var data = {
+        nodes: nodes,
+        edges: edges
+    };
+    var options = {};
+    var network = new vis.Network(container, data, options);
+}
+
+
+
+//adds object linked with tags
+function addKnobject(item, inctags) {
+
 
     //object constructor
     let nobject = {
@@ -20,46 +73,38 @@ function addKnobject(item, tags) {
     };
 
     //user constructor
-    let noUser = {
-        username: item.owner,
-        nobjects: {}
-    };
+    /* let noUser = {
+     username: item.owner,
+     nobjects: {}
+     };*/
 
     //associations
-    nobject.owner = noUser;
-/*
-    noUser.nobjects = nobject;
-*/
-    $.extend(noUser.nobjects, nobject);
-
+    /* nobject.owner = noUser;
+     noUser.nobjects = nobject;
+     $.extend(noUser.nobjects, nobject);
+     */
     //puts in gundb and indexes objects
-    gun.put(nobject).key('nobject/' + item.owner + item.needcan);
-    gun.put(noUser).key('noUsers/' + item.owner);
 
+    let nobjectID = Gun.text.random(6);
 
+    gun.put(nobject).key('nobject/' + nobjectID);
+    /*
+     gun.put(noUser).key('noUsers/' + item.owner);
+     */
+    let guNobject = gun.get('nobject/' + nobjectID);
+
+    let tags = inctags.toString().split(' ');
     //for loop for tags
-  /*  for (var i = 0; i < tags.length; i++) {
-
-        //creates tags keys for each tag
-        gun.put(tags[i]).key('noTags/' + tags[i]);
-        let tag = gun.get('noTags/' + tags[i]);
-        tag.path('name').set(tags[i]);
-
-        //add tags to the nobject
-
-        nobjects.path('tags').set(tags[i]);
-    }*/
+    for (var i = 0; i < tags.length; i++) {
+        guNobject.tag(tags[i]);
+    }
+    getGraphViz(nobjectID);
 
 
-    /*  user.path('nobjects').set( object key or something)*/
-
-
-
-   /* nobjects.path('tags').on(function (tags) {
-        console.log('tags:', tags)
-    })*/
+    /* nobjects.path('tags').on(function (tags) {
+     console.log('tags:', tags)
+     })*/
 }
-
 
 
 const resultCellName = $('#result-names');
@@ -114,7 +159,7 @@ function processNouns() {
     for (var i = 0; i < sentences.length; i++) {
         let terms = sentences[i].terms;
         for (var j = 0; j < terms.length; j++) {
-            if (terms[j].tag == 'Noun') {
+            if (terms[j].tag == 'Noun' || terms[j] == 'Verb') {
                 tags.splice(j, 0, terms[j].text);
             }
         }
@@ -130,7 +175,7 @@ function processData() {
 
     let knob = new Knobject(username, checkNeedCanButton());
     let tags = processNouns();
-    $('#result-print').html(printResults(knob.username, knob.needcan, tags))
+    $('#result-print').html(printResults(knob.owner, knob.needcan, tags));
     addKnobject(knob, tags);
 
 }

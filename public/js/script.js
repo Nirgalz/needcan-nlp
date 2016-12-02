@@ -14,20 +14,23 @@ let nobjects = gun.get('nobjects');
 //vis.js stuff
 
 function getsSharedTagsNobjects(tagz) {
+    let nobjects = [];
+
     for (let i=1; i<tagz.length; i++) {
-        let nobjects;
         gun.tagged().path(tagz[i]).val(function(tagmember,tags){
-            console.log(tagmember,tags)
+            nobjects.push(tagmember)
         })
     }
-/*
+
     return nobjects;
-*/
+
 }
 
 
+
+
 function getGraphViz(nobjectID) {
-   let nobNC;
+    let nobNC;
     let nobTags;
     gun.get('nobject/'+nobjectID).path('needcan').val(function (needcan) {
         nobNC = needcan;
@@ -42,21 +45,38 @@ function getGraphViz(nobjectID) {
 
     ];
 
-    getsSharedTagsNobjects(nobTags);
+    let taggedNobjects = getsSharedTagsNobjects(nobTags);
+
 
     let edgesArray = [];
+    let nodesSecondArray = [];
 
-    function getsTags(nobTags, nobjectID) {
+    function getsTags(nobTags, nobjectID, taggedNobjects) {
+
         for (let i=1; i<nobTags.length; i++) {
             nodesArray.push({id: nobTags[i], label: nobTags[i], color: 'yellow'});
         }
-        for (let i=1; i<nobTags.length; i++) {
-            edgesArray.push({from: nobjectID, to: nobTags[i]});
+        for (let j=1; j<nobTags.length; j++) {
+            edgesArray.push({from: nobjectID, to: nobTags[j]});
         }
+        for (let k=0; k<taggedNobjects.length; k++) {
+            let keys = Object.keys(taggedNobjects[k]);
+            let noTag = taggedNobjects[k]['_']['#'].split('/');
+            for (let l=1; l<keys.length; l++) {
+                for ( let m = 0; m<nodesArray.length; m++) {
+                    if (nodesArray[m]['id'] != keys[l]) {
+                        nodesArray.push({id: keys[l], label: keys[l], color: 'green'});
 
+                    }
+                }
+
+                edgesArray.push({from: noTag[1], to: keys[l]});
+            }
+        }
+        console.log(nodesArray);
 
     }
-    getsTags(nobTags, nobjectID);
+    getsTags(nobTags, nobjectID, taggedNobjects);
 
 
     // create an array with nodes

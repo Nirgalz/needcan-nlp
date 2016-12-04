@@ -11,7 +11,6 @@ let gun = Gun([
 let nobjects = gun.get('nobjects');
 */
 
-//vis.js stuff
 
 function getsSharedTagsNobjects(tagz) {
     let nobjects = [];
@@ -29,75 +28,10 @@ function getsSharedTagsNobjects(tagz) {
 
 
 
-function getGraphViz(nobjectID) {
-    let nobNC;
-    let nobTags;
-    gun.get('nobject/'+nobjectID).path('needcan').val(function (needcan) {
-        nobNC = needcan;
-    });
-    gun.get('nobject/'+nobjectID).path('tags').val(function (tags) {
-        nobTags = tags;
-    });
-    nobTags = Object.keys(nobTags);
-
-    let nodesArray = [
-        {id: nobjectID, label: nobNC, color: 'orange'},
-
-    ];
-
-    let taggedNobjects = getsSharedTagsNobjects(nobTags);
-
-
-    let edgesArray = [];
-    let nodesSecondArray = [];
-
-    function getsTags(nobTags, nobjectID, taggedNobjects) {
-
-        for (let i=1; i<nobTags.length; i++) {
-            nodesArray.push({id: nobTags[i], label: nobTags[i], color: 'yellow'});
-        }
-        for (let j=1; j<nobTags.length; j++) {
-            edgesArray.push({from: nobjectID, to: nobTags[j]});
-        }
-        for (let k=0; k<taggedNobjects.length; k++) {
-            let keys = Object.keys(taggedNobjects[k]);
-            let noTag = taggedNobjects[k]['_']['#'].split('/');
-            for (let l=1; l<keys.length; l++) {
-                let id = keys[l];
-                nodesArray.push({id: id, label: id, color: 'green'});
-
-
-                edgesArray.push({from: noTag[1], to: keys[l]});
-            }
-        }
-        console.log(nodesArray);
-
-    }
-    getsTags(nobTags, nobjectID, taggedNobjects);
-
-
-    // create an array with nodes
-    var nodes = new vis.DataSet(nodesArray);
-
-
-
-    // create an array with edges
-    var edges = new vis.DataSet(edgesArray);
-
-    // create a network
-    var container = document.getElementById('mynetwork');
-    var data = {
-        nodes: nodes,
-        edges: edges
-    };
-    var options = {};
-    var network = new vis.Network(container, data, options);
-}
-
 
 
 //adds object linked with tags
-function addKnobject(item, inctags) {
+function addGunNobject(item, inctags) {
 
 
     //object constructor
@@ -132,7 +66,7 @@ function addKnobject(item, inctags) {
     for (var i = 0; i < tags.length; i++) {
         guNobject.tag(tags[i]);
     }
-    getGraphViz(nobjectID);
+    Graph.getGraphViz(nobjectID);
 
 
     /* nobjects.path('tags').on(function (tags) {
@@ -168,7 +102,7 @@ function checkNeedCanButton() {
 
 //knobject constructor
 //placeholder
-function Knobject(username, needcan, tags) {
+function NobjectConstr(username, needcan, tags) {
     this.owner = username;
     this.needcan = needcan;
     this.tags = {};
@@ -207,16 +141,16 @@ function processData() {
 
     processNames();
 
-    let knob = new Knobject(username, checkNeedCanButton());
+    let knob = new NobjectConstr(username, checkNeedCanButton());
     let tags = processNouns();
-    $('#result-print').html(printResults(knob.owner, knob.needcan, tags));
-    addKnobject(knob, tags);
+    $('#result-print').html(printsNobjectData(knob.owner, knob.needcan, tags));
+    addGunNobject(knob, tags);
 
 }
 
 
 //print results
-function printResults(username, needType, tags) {
+function printsNobjectData(username, needType, tags) {
     return `<table class="ui celled table">
 <tbody>
 <tr>

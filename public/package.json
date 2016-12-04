@@ -4,10 +4,10 @@
   "description": "public side",
   "main": "index.html",
   "dependencies": {
+    "cytoscape": "^2.7.12",
     "gun": "^0.3.9991",
     "guntagger": "^4.2.5",
-    "nlp_compromise": "^6.5.3",
-    "vis": "^4.17.0"
+    "nlp_compromise": "^6.5.3"
   },
   "devDependencies": {},
   "scripts": {

@@ -57,7 +57,7 @@ let Graph = (function () {
 
 
         let elements = [
-            {data :{id: nobjectID, name: nobNC}},
+            {data :{id: nobjectID, name: nobNC, rank:148}},
 
         ];
 
@@ -89,8 +89,13 @@ let Graph = (function () {
             ],
 
             layout: {
-                name: 'grid',
-                rows: 1
+                name: 'concentric',
+                concentric: function( node ){
+                    return node.degree();
+                },
+                levelWidth: function( nodes ){
+                    return 2;
+                }
             },
             elements: elements
         });

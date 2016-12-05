@@ -3,6 +3,59 @@
 let Graph = (function () {
 
 
+    function vizAllData() {
+        let data = gunDB.getsAllData();
+        let nobTags = Object.keys(data);
+        let elements = [];
+        for (let j=1; j<nobTags.length; j++) {
+            elements.push({data :{id: nobTags[j], name: nobTags[j]}});
+            gun.get('guntagger/' +nobTags[j]).val(function(tagmember,tags){
+                let nobjects =Object.keys(tagmember);
+                for (let k= 1; k<nobjects.length; k++) {
+                    elements.push({data :{id: nobjects[k], name: nobjects[k]}});
+                    elements.push({data:{id: nobTags[j] + nobjects[k] ,source: nobjects[k], target: nobTags[j]}});
+
+                }
+            })
+        }
+
+        let cy = cytoscape({
+            container: $('#cy'),
+            style: [ // the stylesheet for the graph
+                {
+                    selector: 'node',
+                    style: {
+                        'background-color': '#666',
+                        'label': 'data(id)'
+                    }
+                },
+
+                {
+                    selector: 'edge',
+                    style: {
+                        'width': 3,
+                        'line-color': '#ccc',
+                        'target-arrow-color': '#ccc',
+                        'target-arrow-shape': 'triangle'
+                    }
+                }
+            ],
+
+            layout: {
+                name: 'concentric',
+                concentric: function( node ){
+                    return node.degree();
+                },
+                levelWidth: function( nodes ){
+                    return 2;
+                }
+            },
+            elements: elements
+        });
+
+    }
+
+
 
     function getsTags(nobTags, nobjectID, taggedNobjects, elements) {
 
@@ -93,7 +146,8 @@ let Graph = (function () {
 
 
     return {
-        getGraphViz: getGraphViz
+        getGraphViz: getGraphViz,
+        vizAllData: vizAllData
     }
     
 })();

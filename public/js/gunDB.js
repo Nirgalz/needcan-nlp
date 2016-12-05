@@ -59,11 +59,23 @@ let gunDB = (function () {
 
     }
 
+    function getsAllData() {
+        let tagz;
+
+            gun.tagged().val(function(tagmember,tags){
+                tagz =tagmember;
+            });
+
+
+        return tagz;
+    }
+
 
 
     return {
         addGunNobject: addGunNobject,
-        getsSharedTagsNobjects: getsSharedTagsNobjects
+        getsSharedTagsNobjects: getsSharedTagsNobjects,
+        getsAllData: getsAllData
     }
 
 })();

@@ -29,18 +29,6 @@ let Graph = (function () {
     }
 
 
-    function getsSharedTagsNobjects(tagz) {
-        let nobjects = [];
-
-        for (let i=1; i<tagz.length; i++) {
-            gun.tagged().path(tagz[i]).val(function(tagmember,tags){
-                nobjects.push(tagmember)
-            })
-        }
-
-        return nobjects;
-
-    }
 
     let getGraphViz = function (nobjectID) {
 
@@ -61,7 +49,7 @@ let Graph = (function () {
 
         ];
 
-        let taggedNobjects = getsSharedTagsNobjects(nobTags);
+        let taggedNobjects = gunDB.getsSharedTagsNobjects(nobTags);
 
 
         getsTags(nobTags, nobjectID, taggedNobjects, elements);

@@ -12,14 +12,6 @@ let nobjects = gun.get('nobjects');
 */
 
 
-
-
-
-
-
-
-
-
 const resultCellName = $('#result-names');
 const resultCellNoun = $('#result-nouns');
 
@@ -81,7 +73,7 @@ function processNouns() {
 }
 
 
-function processData() {
+function processData(action) {
     let username = $('#username').val();
 
     processNames();
@@ -89,7 +81,7 @@ function processData() {
     let knob = new NobjectConstr(username, checkNeedCanButton());
     let tags = processNouns();
     $('#result-print').html(printsNobjectData(knob.owner, knob.needcan, tags));
-    gunDB.addGunNobject(knob, tags);
+    gunDB.addGunNobject(knob, tags, action);
 
 }
 

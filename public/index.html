@@ -69,7 +69,9 @@
         </div>
     </div>
     <br>
-    <button class="fluid ui button" onclick="processData()">Submit</button>
+    <button class="ui button" onclick="processData('notag')">Submit and show nobject and tags</button>
+    <button class="ui button" onclick="processData('addUpdate')">Submit and actualize global graph view</button>
+
     <button class="ui button" onclick="processNouns()">test tags</button>
     <button class="ui button" onclick=" Graph.getGraphViz('OMEfLB')">refresh view for test nobject</button>
     <button class="ui button" onclick=" Graph.vizAllData()">show all data</button>
@@ -99,5 +101,11 @@
 <script src="js/gunDB.js"></script>
 
 <script src="js/script.js"></script>
+
+<script>
+    $(function () {
+        Graph.vizAllData('fullUpdate');
+    })
+</script>
 </body>
 </html>

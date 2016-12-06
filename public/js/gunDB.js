@@ -2,7 +2,7 @@ let gunDB = (function () {
 
 
 //adds object linked with tags
-    function addGunNobject(item, inctags) {
+    function addGunNobject(item, inctags, action) {
 
 
         //object constructor
@@ -37,7 +37,11 @@ let gunDB = (function () {
         for (var i = 0; i < tags.length; i++) {
             guNobject.tag(tags[i]);
         }
-        Graph.getGraphViz(nobjectID);
+        if (action == 'notag') {
+            Graph.getGraphViz(action, nobjectID);
+        } else if (action == 'addUpdate') {
+            Graph.vizAllData(action, nobjectID, tags)
+        }
 
 
         /* nobjects.path('tags').on(function (tags) {
